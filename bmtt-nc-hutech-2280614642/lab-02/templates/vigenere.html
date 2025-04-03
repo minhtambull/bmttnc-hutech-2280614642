@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vigenère Cipher</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="container">
+    <h3 class="text-center mt-4">Vigenère Cipher</h3>
+
+    <h4 class="mt-4">Encryption</h4>
+    <form id="encrypt-form">
+        <div class="mb-3">
+            <label class="form-label">Plain text:</label>
+            <input type="text" class="form-control" id="plain_text" placeholder="Enter text" required/>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Key:</label>
+            <input type="text" class="form-control" id="key" placeholder="Enter Key" required/>
+        </div>
+        <button type="submit" class="btn btn-primary">Encrypt</button>
+    </form>
+
+    <h4 class="mt-4">Decryption</h4>
+    <form id="decrypt-form">
+        <div class="mb-3">
+            <label class="form-label">Cipher text:</label>
+            <input type="text" class="form-control" id="cipher_text" placeholder="Enter cipher text" required/>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Key:</label>
+            <input type="text" class="form-control" id="key_decrypt" placeholder="Enter Key" required/>
+        </div>
+        <button type="submit" class="btn btn-success">Decrypt</button>
+    </form>
+</div>
+
+<script>
+    // Gửi dữ liệu mã hóa
+    document.getElementById('encrypt-form').onsubmit = function(e) {
+        e.preventDefault();
+        const data = {
+            plain_text: document.getElementById('plain_text').value,
+            key: document.getElementById('key').value
+        };
+        fetch('/vigenere/encrypt', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert('Encrypted Text: ' + data.encrypted_text);
+        });
+    };
+
+    // Gửi dữ liệu giải mã
+    document.getElementById('decrypt-form').onsubmit = function(e) {
+        e.preventDefault();
+        const data = {
+            cipher_text: document.getElementById('cipher_text').value,
+            key: document.getElementById('key_decrypt').value
+        };
+        fetch('/vigenere/decrypt', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert('Decrypted Text: ' + data.decrypted_text);
+        });
+    };
+</script>
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RailFence Cipher</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="container">
+    <h4 class="text-center">RailFence Cipher</h4>
+    <!-- Mã hóa RailFence -->
+    <form action="/railfence/encrypt" method="POST">
+        <div class="mb-3">
+            <label for="plain_text" class="form-label">Plain Text</label>
+            <input type="text" class="form-control" name="plain_text" id="plain_text" required autofocus>
+        </div>
+        <div class="mb-3">
+            <label for="key" class="form-label">Key (number of rails)</label>
+            <input type="number" class="form-control" name="key" id="key" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Encrypt</button>
+    </form>
+
+    <!-- Giải mã RailFence -->
+    <form action="/railfence/decrypt" method="POST" style="margin-top: 20px;">
+        <div class="mb-3">
+            <label for="cipher_text" class="form-label">Cipher Text</label>
+            <input type="text" class="form-control" name="cipher_text" id="cipher_text" required>
+        </div>
+        <div class="mb-3">
+            <label for="key" class="form-label">Key (number of rails)</label>
+            <input type="number" class="form-control" name="key" id="key" required>
+        </div>
+        <button type="submit" class="btn btn-success">Decrypt</button>
+    </form>
+</div>
+
+
+
+</body>
+</html>

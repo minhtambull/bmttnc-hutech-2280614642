@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playfair Cipher</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="container">
+    <h2 style="text-align: center;">Playfair Cipher</h2>
+
+    <h4>Encrypt</h4>
+    <form id="playfair-encrypt-form">
+        <div class="form-group">
+            <label for="plainText">Plain Text:</label>
+            <input type="text" class="form-control" id="plainText" name="plain_text" required/>
+        </div>
+        <div class="form-group">
+            <label for="key">Key:</label>
+            <input type="text" class="form-control" id="key" name="key" required/>
+        </div>
+        <button type="submit" class="btn btn-primary">Encrypt</button>
+    </form>
+
+    <h4>Decryption</h4>
+    <form id="playfair-decrypt-form">
+        <div class="form-group">
+            <label for="cipherText">Cipher Text:</label>
+            <input type="text" class="form-control" id="cipherText" name="cipher_text" required/>
+        </div>
+        <div class="form-group">
+            <label for="key">Key:</label>
+            <input type="text" class="form-control" id="key" name="key" required/>
+        </div>
+        <button type="submit" class="btn btn-success">Decrypt</button>
+    </form>
+
+    <div id="result"></div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // Handle Playfair encryption
+    $('#playfair-encrypt-form').submit(function (event) {
+        event.preventDefault();
+
+        const plainText = $('#plainText').val();
+        const key = $('#key').val();
+
+        $.ajax({
+            url: '/playfair/encrypt',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ plain_text: plainText, key: key }),
+            success: function (response) {
+                $('#result').html('<h4>Encrypted Text: ' + response.encrypted_text + '</h4>');
+            }
+        });
+    });
+
+    // Handle Playfair decryption
+    $('#playfair-decrypt-form').submit(function (event) {
+        event.preventDefault();
+
+        const cipherText = $('#cipherText').val();
+        const key = $('#key').val();
+
+        $.ajax({
+            url: '/playfair/decrypt',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ cipher_text: cipherText, key: key }),
+            success: function (response) {
+                $('#result').html('<h4>Decrypted Text: ' + response.decrypted_text + '</h4>');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
